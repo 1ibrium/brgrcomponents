@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:background="@drawable/foodlist_textbg"
+              >
+
+
+    <TextView
+        android:id="@+id/foodlist_title"
+        android:text="This is Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#ffffff"
+        />
+
+    <TextView
+        android:id="@+id/foodlist_body"
+        android:text="This is blablabladawda\nadawdawd\nadfwadaw"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:textColor="#ffffff"
+        />
+
+</LinearLayout>
