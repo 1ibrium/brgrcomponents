@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:gravity="center"
+              android:id="@+id/customobject_foodpicker"
+    >
+    <Button
+        android:layout_width="@dimen/increment_btnsize"
+        android:layout_height="@dimen/increment_btnsize"
+        android:text="-"
+        android:id="@+id/button_minus"
+        android:background="@drawable/shape_btn_circle"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:layout_width="33dp"
+        android:layout_height="@dimen/increment_btnsize"
+        android:inputType="number"
+        android:text="0"
+        android:textSize="@dimen/picker_textsize"
+        android:id="@+id/foodquantity"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:focusable="false"/>
+
+    <Button
+        android:layout_width="@dimen/increment_btnsize"
+        android:layout_height="@dimen/increment_btnsize"
+        android:text="+"
+        android:id="@+id/button_plus"
+        android:background="@drawable/shape_btn_circle"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

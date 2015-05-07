@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+            android:gravity="center"
+              android:id="@+id/customobject_timeout"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:src="@android:drawable/presence_away"
+        android:layout_toStartOf="@+id/foodstatus"/>
+
+    <TextView
+        android:id="@+id/foodstatus"
+        android:text="OPEN 00:00 - 24:00"
+
+        android:textColor="#ff313131"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textSize="22sp"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/foodprice"/>
+
+</LinearLayout>

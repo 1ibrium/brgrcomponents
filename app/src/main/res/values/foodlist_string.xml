@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="picker_textsize">25sp</dimen>
+    <dimen name="increment_btnsize">35dp</dimen>
+    <integer name="max_food_quantity">20</integer>
+    <string name="so_many_alerttext">so many</string>
+
+</resources>
