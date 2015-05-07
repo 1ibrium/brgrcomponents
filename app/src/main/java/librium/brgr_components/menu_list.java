@@ -2,6 +2,7 @@ package librium.brgr_components;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +14,15 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import controller.*;
 import controller.Enum;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 
 public class menu_list extends ActionBarActivity  {
@@ -23,10 +30,13 @@ public class menu_list extends ActionBarActivity  {
     private ListView menu_list_food;
     private FoodListViewAdapter listViewAdapter;
 
+    private PtrClassicFrameLayout mPtrFrame;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_list);
+
 
         this.menu_list_food = (ListView) findViewById(R.id.foodlist);
         this.listItems = getListItems();
@@ -42,6 +52,35 @@ public class menu_list extends ActionBarActivity  {
 
             }
         });
+
+        mPtrFrame = (PtrClassicFrameLayout) findViewById(R.id.list_view_with_empty_view_fragment_ptr_frame);
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+
+                // here check $mListView instead of $content
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, menu_list_food, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                updateData();
+            }
+        });
+
+    }
+
+    protected void updateData() {
+        Log.e("fuckamd", "ListView updateData");
+        mPtrFrame.refreshComplete();
+        TimerTask task = new TimerTask(){
+                 public void run(){
+                     mPtrFrame.refreshComplete();
+                 }
+             };
+        Timer timer = new Timer();
+        timer.schedule(task, 3000);
     }
 
 

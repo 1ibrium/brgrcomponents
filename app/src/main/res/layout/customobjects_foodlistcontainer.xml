@@ -1,9 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="librium.brgr_components.menu_list">
-
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/list_view_with_empty_view_fragment_ptr_frame"
         xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
@@ -21,16 +19,19 @@
             android:layout_height="match_parent">
 
             <ListView
+                android:id="@+id/list_view_with_empty_view_fragment_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
+                android:divider="@null"
+                android:fadingEdge="none"
                 android:listSelector="@android:color/transparent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/foodlist"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"/>
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:scrollbarStyle="outsideOverlay" />
 
         </FrameLayout>
 
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
-
 
 </LinearLayout>
