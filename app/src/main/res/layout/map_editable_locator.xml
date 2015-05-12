@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/locator_gotoDeviceLocation"
+        android:background="@android:drawable/ic_menu_mylocation"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="1dp"
+        android:gravity="center"
+        />
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#cccccc"
+        android:id="@+id/locator_textArena"
+        android:layout_below="@+id/locator_gotoDeviceLocation"
+        >
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:id="@+id/locator_address"
+        android:text="N/A"
+        android:background="#ffececec"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="7dp"
+        android:textSize="30sp"
+        android:gravity="center"      />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="@string/locator_confirmBtn"
+        android:id="@+id/locator_confirmBtn"
+        android:layout_below="@id/locator_address"
+        android:paddingTop="20dp"
+        android:background="#ff1dc82e"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"/>
+
+
+    </RelativeLayout>
+</RelativeLayout>

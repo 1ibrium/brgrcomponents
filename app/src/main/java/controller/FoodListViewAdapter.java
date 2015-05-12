@@ -190,7 +190,7 @@ public class FoodListViewAdapter  extends BaseAdapter  {
                 }else {
                     texts.animate().translationY(0).setDuration(300).setInterpolator(new LinearInterpolator()).start();
 
-                //    slideview(texts,0, - body.getHeight());
+                //    slideview(texts,0,  - body.getHeight());
                     //       texts.setY(image.getHeight() - texts.getHeight());
                 }
                 setIsFoodInfoShow(position);
