@@ -1,4 +1,4 @@
-package controller;
+package librium.brgr_components.controller;
 
 /**
  * Created by Librium on 2015/5/6.

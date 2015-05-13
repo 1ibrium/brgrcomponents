@@ -1,7 +1,6 @@
-package controller;
+package librium.brgr_components.controller;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -184,14 +183,8 @@ public class FoodListViewAdapter  extends BaseAdapter  {
                 //点击动画
                 if(getIsFoodInfoShow(position)){
                     texts.animate().translationY(body.getHeight()).setDuration(300).setInterpolator(new LinearInterpolator()).start();
-                  //  slideview(texts, 0, body.getHeight());
-
-                    //   texts.setY(texts.getY() + texts.getHeight() - Dp2Px(30));
                 }else {
                     texts.animate().translationY(0).setDuration(300).setInterpolator(new LinearInterpolator()).start();
-
-                //    slideview(texts,0,  - body.getHeight());
-                    //       texts.setY(image.getHeight() - texts.getHeight());
                 }
                 setIsFoodInfoShow(position);
 
@@ -213,7 +206,6 @@ public class FoodListViewAdapter  extends BaseAdapter  {
         listItemView.price.setText((String) listItems.get(position)
                 .get("price"));
         listItemView.picker.setQuantity(getFoodQuantity(position));
-
 
         return convertView;
     }

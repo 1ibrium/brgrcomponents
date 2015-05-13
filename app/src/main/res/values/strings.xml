@@ -13,4 +13,5 @@
     <string name="soldout">SOLDOUT</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="locator_confirmBtn">Confirm</string>
+    <string name="map_ioexception">Network error!</string>
 </resources>

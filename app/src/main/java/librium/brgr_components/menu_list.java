@@ -17,8 +17,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import controller.*;
-import controller.Enum;
+import librium.brgr_components.controller.*;
+import librium.brgr_components.controller.Enum;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
