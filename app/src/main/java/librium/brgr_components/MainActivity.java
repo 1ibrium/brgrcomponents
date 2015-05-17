@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -24,6 +25,13 @@ public class MainActivity extends ActionBarActivity {
 
     public void gotomap(View v){
         Intent intent = new Intent(this, MapActivity.class);
+        //     intent.setClassName(this,getPackageName()+".OtherScreenActivity");
+        startActivity(intent);
+
+    }
+
+    public void gotoAddress(View v){
+        Intent intent = new Intent(this, EnterAddressActivity.class);
         //     intent.setClassName(this,getPackageName()+".OtherScreenActivity");
         startActivity(intent);
 

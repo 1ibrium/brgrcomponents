@@ -23,4 +23,13 @@
         android:onClick="gotomap"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="goto googlemap"
+        android:id="@+id/address"
+        android:onClick="gotoAddress"
+        />
+
+
 </LinearLayout>

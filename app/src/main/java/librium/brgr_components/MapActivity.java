@@ -1,9 +1,15 @@
 package librium.brgr_components;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +24,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -33,16 +41,18 @@ import android.os.Handler;
 
 
 public class MapActivity extends AppCompatActivity{
+    private final int locationRequestCode = 1500;
+
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private ImageView picker;//¹Ì¶¨ÔÚÆÁÄ»ÖĞĞÄµÄpicker
+    private ImageView picker;//ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Äµï¿½picker
     private int touchCounter = 0;//onTouch
     private RelativeLayout thismain;
     private boolean _cameraMoveStatus = false;
     private Handler checkCameraIsStop;
     private TextView addressTextView;
-
-    private int displayWidth;
-    private int displayHeight;
+    private boolean isUserInteracting;
+    public LocationListener mLocationListener;
+    private LocationManager loctionManager;
 
 
     private View editable_location_container;
@@ -62,17 +72,37 @@ public class MapActivity extends AppCompatActivity{
         setContentView(R.layout.activity_map);
 
         this.checkCameraIsStop = new Handler();
+        this.isUserInteracting = false;
 
-        //papaµÄ³¤¿í
-        thismain = (RelativeLayout)findViewById(R.id.map_main);
-        thismain.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            public void onLayoutChange(View v, int left, int top, int right,
-                                       int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                thismain.removeOnLayoutChangeListener(this);
-                displayWidth = thismain.getWidth();
-                displayHeight = thismain.getHeight();
+        mLocationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(final Location loc) {
+
+                if (loc != null) {
+                    loctionManager.removeUpdates(mLocationListener);
+                    LatLng geoPoint = new LatLng(loc.getLatitude(), loc.getLongitude());
+                    cameraMoveToMyPosition(geoPoint);
+                } else {
+                    Toast.makeText(MapActivity.this, R.string.gmslocator_fail,
+                            Toast.LENGTH_SHORT).show();
+                }
             }
-        });
+
+            public void onStatusChanged(final String s, final int i, final Bundle b) {
+
+            }
+            // å½“ç³»ç»ŸSetting -> Location & Security -> Use wireless networkså‹¾é€‰ï¼ŒUse GPS satelliteså‹¾é€‰æ—¶è°ƒç”¨
+            public void onProviderEnabled(final String s) {
+
+            }
+
+            public void onProviderDisabled(final String s) {
+
+            }
+        };
+
+        //papa
+        thismain = (RelativeLayout)findViewById(R.id.map_main);
 
         this.editable_location_container = findViewById(R.id.map_editable_locator);
         this.addressTextView = (TextView)editable_location_container.findViewById(R.id.locator_address);
@@ -82,15 +112,12 @@ public class MapActivity extends AppCompatActivity{
 
         //this is for debug only
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-
             public void onMapClick(LatLng point) {
-
-                Log.d("fuckamd", "    µã»÷µÄÎ»ÖÃ" + point.toString());
-
+                Log.d("fuckamd", "åœ°å›¾ç‚¹å‡»åæ ‡" + point.toString());
             }
         });
         mMap.setMyLocationEnabled(false);
-        //ÉèÖÃÖĞĞÄlocator
+        //å±å¹•ä¸­å¿ƒlocator
         final ImageView picker = (ImageView)findViewById(R.id.map_centerlocator);
         FrameLayout mapPapa = (FrameLayout)picker.getParent();
 
@@ -105,6 +132,34 @@ public class MapActivity extends AppCompatActivity{
         createArena();
 
     }
+
+    public void onAddressTextViewClick(View view){
+        Intent intent=new Intent(this,EnterAddressActivity.class);
+        startActivityForResult(intent, locationRequestCode);
+    }
+
+    //æ¥æ”¶å½“å‰Activityè·³è½¬åï¼Œç›®æ ‡Activityå…³é—­åçš„å›ä¼ å€¼
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //è‡ªå®šä¹‰äº† å°±ä¸éœ€è¦åˆ°ç‰©ç†ä½ç½®äº†
+        loctionManager.removeUpdates(mLocationListener);
+        //æ ¹æ®ç”¨æˆ·é€‰çš„ä½ç½®ç§»åŠ¨æ‘„åƒæœº
+        switch(resultCode){
+            case RESULT_OK:{//æ¥æ”¶å¹¶æ˜¾ç¤ºActivityä¼ è¿‡æ¥çš„å€¼
+                Bundle bundle = data.getExtras();
+                double latitude = bundle.getDouble("latitude");
+                double longitude = bundle.getDouble("longitude");
+                cameraMoveToMyPosition(new LatLng(latitude, longitude));
+                break;
+            }
+            default:
+                break;
+        }
+
+    }
+
+
 
     Runnable showEditorWhenCameraStop = new Runnable(){
         public void run(){
@@ -129,8 +184,14 @@ public class MapActivity extends AppCompatActivity{
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.¡¢
+            // Try to obtain the map from the SupportMapFragment.ï¿½ï¿½
             mMap = ((com.google.android.gms.maps.SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                @Override
+                public void onMapLoaded() {
+                    getMyLocation();
+                }
+            });
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 setUpMap();
@@ -138,9 +199,38 @@ public class MapActivity extends AppCompatActivity{
         }
     }
 
+    private void getMyLocation() {
+        String contextService = Context.LOCATION_SERVICE;
+        //é€šè¿‡ç³»ç»ŸæœåŠ¡ï¼Œå–å¾—LocationManagerå¯¹è±¡
+        loctionManager = (LocationManager) getSystemService(contextService);
+
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);//é«˜ç²¾åº¦
+        criteria.setAltitudeRequired(false);//ä¸è¦æ±‚æµ·æ‹”
+        criteria.setBearingRequired(false);//ä¸è¦æ±‚æ–¹ä½
+        criteria.setCostAllowed(true);//å…è®¸æœ‰èŠ±è´¹
+        criteria.setPowerRequirement(Criteria.POWER_LOW);//ä½åŠŸè€—
+        String provider = loctionManager.getBestProvider(criteria, true);
+        Location location = loctionManager.getLastKnownLocation(provider);
+        if(null == location){
+            Toast.makeText(this, getString(R.string.waiting_locationchange_event),Toast.LENGTH_SHORT).show();
+            loctionManager.requestLocationUpdates(provider, 1000, 1, mLocationListener);
+
+        }
+        //æœ‰å·¨å¤§é—®é¢˜
+    }
+
+    private void cameraMoveToMyPosition(LatLng myloc) {
+        mMap.setOnCameraChangeListener(null);
+        LatLng latLng = new LatLng(myloc.latitude, myloc.longitude);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
+        mMap.animateCamera(cameraUpdate);
+    }
+
+
     private void setUpMap() {
         mMap.setMyLocationEnabled(true);
-        mMap.setOnCameraChangeListener(mOnCameraChangeListener);
+        //mMap.setOnCameraChangeListener(mOnCameraChangeListener);
     }
 
     GoogleMap.OnCameraChangeListener mOnCameraChangeListener = new GoogleMap.OnCameraChangeListener() {
@@ -150,7 +240,7 @@ public class MapActivity extends AppCompatActivity{
         }
     };
 
-    //ÒÆ¶¯½áÊøÏÔÊ¾µØÖ·ÊäÈë¿ò
+    //åœæ­¢ç§»åŠ¨å¼¹å‡ºåœ°å€æ 
     private void cameraMoveStatus(boolean i){
         this._cameraMoveStatus = i;
     }
@@ -163,7 +253,7 @@ public class MapActivity extends AppCompatActivity{
         return !returnValue;
     }
 
-    //¸ù¾İ¾­Î³¶È»ñµÃµØÖ·
+    //ç»çº¬åº¦å¾—åˆ°åœ°å€
     private String getLocationAddress(LatLng point){
         StringBuilder sb=new StringBuilder();
         Geocoder geoCode=new Geocoder(this,Locale.getDefault());
@@ -174,7 +264,7 @@ public class MapActivity extends AppCompatActivity{
             e.printStackTrace();
             Toast.makeText(this, getString(R.string.map_ioexception), Toast.LENGTH_SHORT).show();
         } catch (Exception e){
-            //µØÖ·²»´æÔÚ //µØÍ¼Î´³É¹¦³õÊ¼»¯
+            //æœªæˆåŠŸåˆå§‹åŒ–
             e.printStackTrace();
         }
 
@@ -200,7 +290,7 @@ public class MapActivity extends AppCompatActivity{
     }
 
 
-    // ÆÁÄ»ÖĞĞÄpickerËù¶ÔÓ¦µÄµØÀíÎ»ÖÃ
+    //pickeræ‰€å¯¹åº”çš„åœ°å›¾åæ ‡
     public LatLng fromStaticLocatorToGeo(){
         Projection projection=mMap.getProjection();
         LatLng gpoint=projection.fromScreenLocation(get_pickerPointTo());
@@ -229,7 +319,7 @@ public class MapActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    //µØÖ·ÊäÈë¿òµÄµ­Èëµ­³öĞ§¹û
+    //æ˜¾ç¤ºéšè—åœ°å€æ 
     private boolean isEditableViewHiding = false;
     public void hideEditableView(){
         if(isEditableViewHiding)return;
@@ -252,13 +342,19 @@ public class MapActivity extends AppCompatActivity{
     public boolean dispatchTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                isUserInteracting = true;
+                if(touchCounter == 0) {
+                    mMap.setOnCameraChangeListener(mOnCameraChangeListener);
+                }
                 touchCounter ++;
                 break;
 
             case MotionEvent.ACTION_UP:
                 touchCounter --;
-                if( 0 == touchCounter )
+                if( 0 == touchCounter ) {
+                    isUserInteracting = false;
                     checkCameraIsStop.postDelayed(showEditorWhenCameraStop, 1800);
+                }
                 break;
         }
 

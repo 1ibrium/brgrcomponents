@@ -14,4 +14,9 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="locator_confirmBtn">Confirm</string>
     <string name="map_ioexception">Network error!</string>
+    <string name="title_activity_enter_address">EnterAddressActivity</string>
+    <string name="invalid_address_input">We can\'t find your address!Sorry!</string>
+    <string name="gmslocator_fail">Can\'t access your location</string>
+    <string name="waiting_locationchange_event">Waiting For Location</string>
+    <string name="not_readable_addressStr">Invalid Address</string>
 </resources>

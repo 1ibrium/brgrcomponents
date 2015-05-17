@@ -30,14 +30,14 @@
         android:layout_width="fill_parent"
         android:layout_height="34dp"
         android:id="@+id/locator_address"
-        android:editable="true"
         android:text="N/A"
         android:background="#ffececec"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginTop="4dp"
         android:textSize="24sp"
-        android:gravity="center"      />
+        android:gravity="center"
+        android:onClick="onAddressTextViewClick"/>
 
     <Button
         android:layout_width="fill_parent"
