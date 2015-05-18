@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="#F0F0F0"
+    android:layout_weight="1"
+    >
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.06"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.22"
+        android:weightSum="1">
+
+        <view.custom.CustomBorderTextView
+            style="@style/user_register_style"
+                  android:layout_width="0dip"
+                  android:layout_height="fill_parent"
+                  android:drawableLeft="@android:drawable/ic_menu_edit"
+                  android:id="@+id/user_firstname"
+                  android:hint="First name"
+            android:background="#FFFFFF"
+                  custom:showChoppingBottomBorder = "true"
+                  custom:leftChopping = "0.15"
+                  android:layout_weight="0.35"
+            />
+        <view.custom.CustomBorderTextView style="@style/user_register_style"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:hint="Last name"
+                android:id="@+id/user_lastname"
+                android:includeFontPadding = "true"
+                                          android:background="#FFFFFF"
+                                          android:layout_weight="0.65"
+                android:paddingStart="6dp"
+                custom:showFullSizeBottomBorder="true"
+                custom:showLeftBorder="true"
+
+            />
+
+    </LinearLayout>
+
+            <view.custom.CustomBorderTextView style="@style/user_register_style"
+                  android:layout_width="fill_parent"
+                  android:layout_height="0dp"
+                  android:drawableLeft="@android:drawable/ic_dialog_email"
+                  android:hint="Email"
+                  android:id="@+id/user_email"
+                  android:background="#FFFFFF"
+                  android:includeFontPadding = "true"
+                  android:layout_weight="0.22"
+                  android:paddingStart="6dp"
+                  custom:showChoppingBottomBorder="true"
+                  custom:showLeftBorder="true"
+                  custom:leftChopping = "0.0525"
+                />
+
+            <view.custom.CustomBorderTextView style="@style/user_register_style"
+                                              android:layout_weight="0.22"
+                                              android:layout_width="fill_parent"
+                                              android:layout_height="0dp"
+                                              android:drawableLeft="@android:drawable/ic_lock_lock"
+                                              android:hint="Password(min 6 characters)"
+                                              android:id="@+id/user_password"
+                                              android:background="#FFFFFF"
+                                              android:includeFontPadding = "true"
+                                              android:paddingStart="6dp"
+                                              android:inputType="textPassword"
+                                              custom:showChoppingBottomBorder="true"
+                                              custom:showLeftBorder="true"
+                                              custom:leftChopping = "0.0525"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.06"/>
+
+        <TextView style="@style/user_register_style"
+                                          android:layout_weight="0.22"
+                                          android:layout_width="fill_parent"
+                                          android:layout_height="0dp"
+                                          android:drawableLeft="@android:drawable/ic_dialog_info"
+                                          android:hint="Redeem code?(optional)"
+                                          android:id="@+id/user_redeem"
+                  android:background="#FFFFFF"
+                  android:includeFontPadding = "true"
+                                          android:paddingStart="6dp"
+                                          android:inputType="textPassword"/>
+
+
+    </LinearLayout>

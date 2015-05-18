@@ -5,4 +5,8 @@
         <item name="android:windowTitleSize">50dp</item>
     </style>
 
+    <style name="user_register_style">
+        <item name="android:textColorHint">#D7DBE0</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
 </resources>

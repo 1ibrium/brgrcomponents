@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomBorderTextView">
+        <attr name="showFullSizeBottomBorder" format="boolean"/>
+        <attr name="showChoppingBottomBorder" format="boolean"/>
+        <attr name="showLeftBorder" format="boolean"/>
+        <attr name="borderColor" format="color"/>
+        <attr name="borderWidth" format="dimension"/>
+        <attr name="leftChopping" format="float" />
+    </declare-styleable>
+
+</resources>

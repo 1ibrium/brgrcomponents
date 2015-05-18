@@ -7,4 +7,8 @@ public class Enum {
     public enum foodStatus {
         available, timeout, soldout
     }
+
+    public enum borderStyle {
+        ALL, BOTTOM, soldout
+    }
 }

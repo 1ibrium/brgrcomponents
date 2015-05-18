@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -36,7 +37,7 @@ public class menu_list extends ActionBarActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_list);
-
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.header_foodlist);
 
         this.menu_list_food = (ListView) findViewById(R.id.foodlist);
         this.listItems = getListItems();
